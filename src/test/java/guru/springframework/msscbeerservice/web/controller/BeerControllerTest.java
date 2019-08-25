@@ -1,7 +1,7 @@
 package guru.springframework.msscbeerservice.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import guru.springframework.msscbeerservice.web.model.BeerDto;
+import guru.springframework.msscbeerservice.web.model.BeerDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,7 +30,7 @@ public class BeerControllerTest {
 
     @Test
     public void testNewBeer() throws Exception {
-        BeerDto beerDto = BeerDto.builder().build();
+        BeerDTO beerDto = BeerDTO.builder().build();
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/beer/")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -42,7 +42,7 @@ public class BeerControllerTest {
 
     @Test
     public void testUpdateBeerById() throws Exception {
-        BeerDto beerDto = BeerDto.builder().build();
+        BeerDTO beerDto = BeerDTO.builder().build();
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
         mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/beer/" + UUID.randomUUID().toString())
                 .contentType(MediaType.APPLICATION_JSON)
