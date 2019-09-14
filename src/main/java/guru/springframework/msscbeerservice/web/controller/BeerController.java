@@ -3,6 +3,7 @@ package guru.springframework.msscbeerservice.web.controller;
 
 import guru.springframework.msscbeerservice.services.BeerService;
 import guru.springframework.msscbeerservice.web.model.BeerDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +17,11 @@ import java.util.UUID;
 
 @RequestMapping("/api/v1/beer")
 @RestController
+@RequiredArgsConstructor
 public class BeerController {
     private final BeerService beerService;
 
-    public BeerController(BeerService beerService) {
-        this.beerService = beerService;
-    }
+
 
     @GetMapping({"/{beerId}"})
     ResponseEntity<BeerDTO> getBeer(@PathVariable("beerId") UUID beerId) {
@@ -32,7 +32,7 @@ public class BeerController {
     ResponseEntity handlePost(@Validated @RequestBody BeerDTO beerDTO) {
         BeerDTO savedDTO = beerService.saveBeer(beerDTO);
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("location", "/api/v1/beer" + savedDTO.getId().toString());
+        httpHeaders.add("location", "/api/v1/beer");
         return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
     }
 
