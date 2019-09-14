@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +29,7 @@ public class BeerController {
     }
 
     @PostMapping
-    ResponseEntity handlePost(@RequestBody BeerDTO beerDTO) {
+    ResponseEntity handlePost(@Valid @RequestBody BeerDTO beerDTO) {
         BeerDTO savedDTO = beerService.saveBeer(beerDTO);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("location", "/api/v1/beer" + savedDTO.getId().toString());
@@ -36,7 +37,7 @@ public class BeerController {
     }
 
     @PutMapping({"/{beerId}"})
-    ResponseEntity handlePut(@PathVariable("beerId") UUID beerId, @RequestBody BeerDTO beerDTO) {
+    ResponseEntity handlePut(@PathVariable("beerId") UUID beerId, @Valid @RequestBody BeerDTO beerDTO) {
         beerService.updateBeerByID(beerId, beerDTO);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -49,6 +50,7 @@ public class BeerController {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<List> validationErrorHandler(ConstraintViolationException e) {
+        System.out.println("Inside Exception Handler");
         List<String> errors = new ArrayList<>(e.getConstraintViolations().size());
         e.getConstraintViolations().forEach(constraintViolation -> {
             errors.add(constraintViolation.getPropertyPath() + ":" + constraintViolation.getMessage());
