@@ -1,5 +1,6 @@
 package guru.springframework.msscbeerservice.web.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import guru.springframework.msscbeerservice.web.model.enums.BeerStyleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +35,7 @@ public class BeerDTO {
     @Positive
     private Long upc;
     @Positive
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private BigDecimal price;
     @Positive
     private Integer quantityOnHand;
