@@ -4,6 +4,7 @@ package guru.springframework.msscbeerservice.web.controller;
 import guru.springframework.msscbeerservice.services.BeerService;
 import guru.springframework.msscbeerservice.web.model.BeerDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class BeerController {
 
 
     @GetMapping({"/{beerId}"})
-    ResponseEntity<BeerDTO> getBeer(@PathVariable("beerId") UUID beerId) {
+    ResponseEntity<BeerDTO> getBeer(@PathVariable("beerId") UUID beerId) throws ChangeSetPersister.NotFoundException {
         return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
     }
 
@@ -37,7 +38,7 @@ public class BeerController {
     }
 
     @PutMapping({"/{beerId}"})
-    ResponseEntity handlePut(@PathVariable("beerId") UUID beerId, @Validated @RequestBody BeerDTO beerDTO) {
+    ResponseEntity handlePut(@PathVariable("beerId") UUID beerId, @Validated @RequestBody BeerDTO beerDTO) throws ChangeSetPersister.NotFoundException {
         beerService.updateBeerByID(beerId, beerDTO);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
