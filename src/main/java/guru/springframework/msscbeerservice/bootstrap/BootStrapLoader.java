@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
-@Component
+//@Component
 @Slf4j
 public class BootStrapLoader implements CommandLineRunner {
     private final BeerRepository beerRepository;
